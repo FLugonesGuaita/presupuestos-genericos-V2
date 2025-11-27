@@ -1,12 +1,36 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import * as pdfjsLib from "pdfjs-dist";
+import { PDFDocument, rgb } from "pdf-lib";
 
-import React from "https://esm.sh/react@18.2.0";
-import ReactDOM from "https://esm.sh/react-dom@18.2.0/client";
-import * as pdfjsLib from "https://esm.sh/pdfjs-dist@4.4.168";
-import { PDFDocument, rgb, LineCapStyle, LineJoinStyle } from "https://esm.sh/pdf-lib@1.17.1";
-
+// Configuración del Worker para PDF.js
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://esm.sh/pdfjs-dist@4.4.168/build/pdf.worker.mjs";
 
 const h = React.createElement;
+
+// Definición manual de constantes para evitar errores de importación en CDNs
+const LineCapStyle = {
+    Butt: 'Butt',
+    Round: 'Round',
+    Projecting: 'Projecting',
+};
+
+const LineJoinStyle = {
+    Miter: 'Miter',
+    Round: 'Round',
+    Bevel: 'Bevel',
+};
+
+// Generador de UUID compatible con contextos no seguros (http)
+const generateUUID = () => {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+};
 
 const GOOGLE_FONTS = {
     'Caveat': 'https://fonts.gstatic.com/s/caveat/v17/WnznHAc5bAfYB2Q7aAnM.ttf',
@@ -40,7 +64,6 @@ const PlusIcon = () => h(Icon, { path: "M10 3a.75.75 0 0 1 .75.75v6.5h6.5a.75.75
 const TrashIcon = () => h(Icon, { path: "M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.53 6.53a.75.75 0 0 1 1.06-1.06L10 8.94l2.47-2.47a.75.75 0 1 1 1.06 1.06L11.06 10l2.47 2.47a.75.75 0 1 1-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 0 1-1.06-1.06L8.94 10 6.53 7.53Z" });
 const MinusIcon = () => h(Icon, { path: "M3 10a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 10Z" });
 const FitScreenIcon = () => h(Icon, { path: "M3 8.25a.75.75 0 0 1 .75-.75h2.25a.75.75 0 0 1 0 1.5H4.5v2.25a.75.75 0 0 1-1.5 0V8.25ZM15.5 6h2.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V8.25h-2.25a.75.75 0 0 1 0-1.5ZM8.25 3a.75.75 0 0 1 .75.75v2.25h2.25a.75.75 0 0 1 0 1.5H9v2.25a.75.75 0 0 1-1.5 0V7.5H5.25a.75.75 0 0 1 0-1.5H7.5V3.75A.75.75 0 0 1 8.25 3ZM11.75 16a.75.75 0 0 1-.75-.75v-2.25h-2.25a.75.75 0 0 1 0-1.5H11v-2.25a.75.75 0 0 1 1.5 0V11.5h2.25a.75.75 0 0 1 0 1.5H12.5v2.25a.75.75 0 0 1-.75.75Z", clipRule: "evenodd" });
-const EraserIcon = () => h(Icon, { path: "M4.5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v2.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-2.5zm-2-4A2.5 2.5 0 0 1 5 5h10a2.5 2.5 0 0 1 2.5 2.5v7A2.5 2.5 0 0 1 15 17H5a2.5 2.5 0 0 1-2.5-2.5v-7z" });
 const BrushIcon = () => h(Icon, { path: "M15.207 3.793a1 1 0 0 1 0 1.414L8.5 12h-3a1 1 0 0 1-1-1v-3l6.793-6.793a1 1 0 0 1 1.414 0ZM11.5 15a2.5 2.5 0 0 0-2.5 2.5h5A2.5 2.5 0 0 0 11.5 15Z" });
 
 const InputGroup = ({ label, children }) => h('div', { className: 'flex flex-col gap-1' }, h('label', { className: 'text-sm font-medium text-slate-600' }, label), children);
@@ -370,7 +393,8 @@ function App() {
         }
     };
     
-    const uuidv4 = () => crypto.randomUUID();
+    // UUID seguro
+    const uuidv4 = generateUUID;
 
     const addElement = (props) => {
         if (isDrawingMode) setIsDrawingMode(false); // Turn off drawing if adding text
