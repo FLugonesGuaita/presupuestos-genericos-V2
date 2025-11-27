@@ -1,0 +1,5 @@
+{
+  "name": "PDF Template Filler",
+  "description": "An interactive web application to fill PDF templates with text elements, featuring draggable and resizable fields, and an AI-powered auto-organization tool using Gemini.",
+  "requestFramePermissions": []
+}
