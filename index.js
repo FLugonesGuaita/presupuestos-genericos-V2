@@ -68,21 +68,22 @@ const DEFAULT_TEXT_ELEMENT = {
     color: '#000000',
 };
 
+// --- ICONOS ---
 const Icon = ({ path, className = "w-5 h-5" }) => h('svg', { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", fill: "currentColor", className }, h('path', { fillRule: "evenodd", d: path, clipRule: "evenodd" }));
 const UploadIcon = () => h(Icon, { path: "M9.47 1.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1-1.06 1.06L10 3.06 6.28 6.78a.75.75 0 0 1-1.06-1.06l4.25-4.25ZM3.25 9.75a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 0 .75.75h10.5a.75.75 0 0 0 .75-.75V10.5a.75.75 0 0 1 1.5 0v3.75a2.25 2.25 0 0 1-2.25 2.25H4.75A2.25 2.25 0 0 1 2.5 14.25V10.5a.75.75 0 0 1 .75-.75Z" });
 const PlusIcon = () => h(Icon, { path: "M10 3a.75.75 0 0 1 .75.75v6.5h6.5a.75.75 0 0 1 0 1.5h-6.5v6.5a.75.75 0 0 1-1.5 0v-6.5H2.25a.75.75 0 0 1 0-1.5h6.5V3.75A.75.75 0 0 1 10 3Z" });
 const TrashIcon = () => h(Icon, { path: "M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.53 6.53a.75.75 0 0 1 1.06-1.06L10 8.94l2.47-2.47a.75.75 0 1 1 1.06 1.06L11.06 10l2.47 2.47a.75.75 0 1 1-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 0 1-1.06-1.06L8.94 10 6.53 7.53Z" });
 const MinusIcon = () => h(Icon, { path: "M3 10a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 10Z" });
 const FitScreenIcon = () => h(Icon, { path: "M3 8.25a.75.75 0 0 1 .75-.75h2.25a.75.75 0 0 1 0 1.5H4.5v2.25a.75.75 0 0 1-1.5 0V8.25ZM15.5 6h2.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V8.25h-2.25a.75.75 0 0 1 0-1.5ZM8.25 3a.75.75 0 0 1 .75.75v2.25h2.25a.75.75 0 0 1 0 1.5H9v2.25a.75.75 0 0 1-1.5 0V7.5H5.25a.75.75 0 0 1 0-1.5H7.5V3.75A.75.75 0 0 1 8.25 3ZM11.75 16a.75.75 0 0 1-.75-.75v-2.25h-2.25a.75.75 0 0 1 0-1.5H11v-2.25a.75.75 0 0 1 1.5 0V11.5h2.25a.75.75 0 0 1 0 1.5H12.5v2.25a.75.75 0 0 1-.75.75Z", clipRule: "evenodd" });
-const EraserIcon = () => h(Icon, { path: "M4.5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v2.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-2.5zm-2-4A2.5 2.5 0 0 1 5 5h10a2.5 2.5 0 0 1 2.5 2.5v7A2.5 2.5 0 0 1 15 17H5a2.5 2.5 0 0 1-2.5-2.5v-7z" });
 const BrushIcon = () => h(Icon, { path: "M15.207 3.793a1 1 0 0 1 0 1.414L8.5 12h-3a1 1 0 0 1-1-1v-3l6.793-6.793a1 1 0 0 1 1.414 0ZM11.5 15a2.5 2.5 0 0 0-2.5 2.5h5A2.5 2.5 0 0 0 11.5 15Z" });
 const UndoIcon = () => h(Icon, { path: "M7.65 4.86a.75.75 0 0 1 1.2.7l-.42 2.68 2.68.42a.75.75 0 1 1-.23 1.48l-3.5-.55a.75.75 0 0 1-.61-.61l.55-3.5a.75.75 0 0 1 .33-.62Zm2.59 1.45a6 6 0 1 1-5.18 5.4.75.75 0 0 1 1.5-.15 4.5 4.5 0 1 0 4.29-4.9l.4-.04Z" });
 const RedoIcon = () => h(Icon, { path: "M12.35 4.86a.75.75 0 0 0-1.2.7l.42 2.68-2.68.42a.75.75 0 1 0 .23 1.48l3.5-.55a.75.75 0 0 0 .61-.61l-.55-3.5a.75.75 0 0 0-.33-.62Zm-2.59 1.45a6 6 0 1 0 5.18 5.4.75.75 0 0 0-1.5-.15 4.5 4.5 0 1 1-4.29-4.9l-.4-.04Z" });
 const CopyIcon = () => h(Icon, { path: "M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12a1.5 1.5 0 0 1 .439 1.061V16.5a1.5 1.5 0 0 1-1.5 1.5h-8.5A1.5 1.5 0 0 1 5.5 16.5v-13H7v1.5a1.5 1.5 0 0 0 1.5 1.5h4a1.5 1.5 0 0 0 1.5-1.5v-2H12a.5.5 0 0 0-.5.5v2.5a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1.5Z" });
-const SaveIcon = () => h(Icon, { path: "M10 2a.75.75 0 0 1 .75.75v7.5h7.5a.75.75 0 0 1 0 1.5h-7.5v7.5a.75.75 0 0 1-1.5 0v-7.5h-7.5a.75.75 0 0 1 0-1.5h7.5v-7.5A.75.75 0 0 1 10 2Z" }); // Using Plus for "Save New" visually or disk
+const SaveIcon = () => h(Icon, { path: "M10 2a.75.75 0 0 1 .75.75v7.5h7.5a.75.75 0 0 1 0 1.5h-7.5v7.5a.75.75 0 0 1-1.5 0v-7.5h-7.5a.75.75 0 0 1 0-1.5h7.5v-7.5A.75.75 0 0 1 10 2Z" });
 const DiskIcon = () => h(Icon, { path: "M3 3.5A1.5 1.5 0 0 1 4.5 2h6.879a1.5 1.5 0 0 1 1.06.44l4.122 4.12A1.5 1.5 0 0 1 17 7.622V16.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 16.5v-13ZM13.25 9a.75.75 0 0 0-.75.75v.5h-5v-.5a.75.75 0 0 0-1.5 0v.5c0 .414.336.75.75.75h6.5a.75.75 0 0 0 .75-.75v-.5a.75.75 0 0 0-.75-.75Z" });
 const StarIcon = () => h(Icon, { path: "M10 1l2.928 6.255 6.772.955-5 4.975 1.18 6.815L10 16.75l-6.08 3.25 1.18-6.815-5-4.975 6.772-.955L10 1z" });
 const FolderOpenIcon = () => h(Icon, { path: "M2 4.75A.75.75 0 0 1 2.75 4h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 4.75Zm0 10.5a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75ZM2 10a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 10Z" });
+const ImageIcon = () => h(Icon, { path: "M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" });
 
 const InputGroup = ({ label, children }) => h('div', { className: 'flex flex-col gap-1' }, h('label', { className: 'text-sm font-medium text-slate-600' }, label), children);
 const NumberInput = ({ value, onChange }) => h('input', { type: 'number', className: 'w-full p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-sky-500', value, onChange });
@@ -119,9 +120,12 @@ const ControlPanel = ({
     savedTemplates,
     saveTemplate,
     loadTemplate,
-    deleteTemplate
+    deleteTemplate,
+    handleImageUpload,
+    imageInputRef
 }) => {
     const isDraw = formState.type === 'draw';
+    const isImage = formState.type === 'image';
     const [tab, setTab] = React.useState('tools'); // 'tools' or 'saved'
 
     return h('div', { className: 'flex flex-col h-full bg-white p-4 lg:p-6 border-r border-slate-200 overflow-y-auto' },
@@ -192,7 +196,13 @@ const ControlPanel = ({
                                 }, h(PlusIcon, { className: "w-4 h-4" }), 'Añadir Texto'),
                                 
                                 h('button', { 
-                                    className: `w-full font-bold py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm border ${isDrawingMode ? 'bg-slate-700 text-white border-slate-700' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'}`, 
+                                    className: `w-full font-bold py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm border bg-white text-slate-700 border-slate-300 hover:bg-slate-50`, 
+                                    onClick: () => imageInputRef.current?.click()
+                                }, h(ImageIcon, { className: "w-4 h-4" }), 'Añadir Imagen'),
+                                h('input', { ref: imageInputRef, type: 'file', accept: 'image/*', className: 'hidden', onChange: handleImageUpload }),
+
+                                h('button', { 
+                                    className: `col-span-2 w-full font-bold py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm border ${isDrawingMode ? 'bg-slate-700 text-white border-slate-700' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'}`, 
                                     onClick: toggleDrawingMode 
                                 }, h(BrushIcon, { className: "w-4 h-4" }), isDrawingMode ? 'Pincel Activo' : 'Pincel')
                             ),
@@ -218,14 +228,16 @@ const ControlPanel = ({
                         // Element Properties
                         selectedElementId && !isDrawingMode && h('div', { className: 'space-y-4 animate-in fade-in duration-200' },
                             h('div', { className: 'flex justify-between items-center'},
-                                h('h3', { className: 'font-semibold text-md' }, isDraw ? 'Editar Trazo' : 'Editar Texto'),
+                                h('h3', { className: 'font-semibold text-md' }, 
+                                    isDraw ? 'Editar Trazo' : (isImage ? 'Editar Imagen' : 'Editar Texto')
+                                ),
                                 h('div', { className: 'flex gap-2' },
-                                    !isDraw && h('button', {
+                                    !isDraw && !isImage && h('button', {
                                         onClick: duplicateElement,
                                         className: 'text-xs flex items-center gap-1 text-sky-600 hover:text-sky-800 font-medium px-2 py-1 bg-sky-50 rounded border border-sky-100',
                                         title: 'Duplicar (Ctrl+D)'
                                     }, h(CopyIcon, { className: "w-3 h-3"}), 'Clonar'),
-                                    !isDraw && h('button', {
+                                    !isDraw && !isImage && h('button', {
                                         onClick: () => {
                                             saveSignature();
                                             setTab('saved');
@@ -236,7 +248,7 @@ const ControlPanel = ({
                                 )
                             ),
                             
-                            !isDraw && h(InputGroup, { label: 'Texto' }, h('textarea', {
+                            !isDraw && !isImage && h(InputGroup, { label: 'Texto' }, h('textarea', {
                                 className: 'w-full p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-sky-500',
                                 rows: 3,
                                 value: formState.text || '',
@@ -244,16 +256,36 @@ const ControlPanel = ({
                             })),
 
                             !isDraw && h('div', { className: 'grid grid-cols-2 gap-4' },
-                                h(InputGroup, { label: 'Posición X' }, h(NumberInput, { value: formState.x, onChange: e => updateSelectedElement({ x: parseInt(e.target.value, 10) }) })),
-                                h(InputGroup, { label: 'Posición Y' }, h(NumberInput, { value: formState.y, onChange: e => updateSelectedElement({ y: parseInt(e.target.value, 10) }) }))
+                                h(InputGroup, { label: 'Posición X' }, h(NumberInput, { value: Math.round(formState.x), onChange: e => updateSelectedElement({ x: parseInt(e.target.value, 10) }) })),
+                                h(InputGroup, { label: 'Posición Y' }, h(NumberInput, { value: Math.round(formState.y), onChange: e => updateSelectedElement({ y: parseInt(e.target.value, 10) }) }))
                             ),
 
                             !isDraw && h('div', { className: 'grid grid-cols-2 gap-4' },
-                                h(InputGroup, { label: 'Ancho' }, h(NumberInput, { value: formState.width, onChange: e => updateSelectedElement({ width: parseInt(e.target.value, 10) }) })),
-                                h(InputGroup, { label: 'Tamaño Fuente' }, h(NumberInput, { value: formState.fontSize, onChange: e => updateSelectedElement({ fontSize: parseInt(e.target.value, 10) }) }))
+                                h(InputGroup, { label: 'Ancho' }, h(NumberInput, { value: Math.round(formState.width), onChange: e => {
+                                    const val = parseInt(e.target.value, 10);
+                                    if(isImage) {
+                                        updateSelectedElement({ width: val, height: val / formState.aspectRatio });
+                                    } else {
+                                        updateSelectedElement({ width: val });
+                                    }
+                                }})),
+                                !isImage && h(InputGroup, { label: 'Tamaño Fuente' }, h(NumberInput, { value: formState.fontSize, onChange: e => updateSelectedElement({ fontSize: parseInt(e.target.value, 10) }) })),
+                                isImage && h(InputGroup, { label: 'Alto (Auto)' }, h(NumberInput, { value: Math.round(formState.height || 0), onChange: () => {} })) // Read-only approx
                             ),
 
-                            !isDraw && h(React.Fragment, null,
+                            isImage && h(InputGroup, { label: 'Opacidad' }, 
+                                h('div', { className: 'flex items-center gap-2' },
+                                    h('input', { 
+                                        type: 'range', min: '0.1', max: '1', step: '0.1', 
+                                        value: formState.opacity || 1, 
+                                        onChange: e => updateSelectedElement({ opacity: parseFloat(e.target.value) }),
+                                        className: 'w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-sky-600'
+                                    }),
+                                    h('span', { className: 'text-xs text-slate-600 w-8' }, formState.opacity || 1)
+                                )
+                            ),
+
+                            !isDraw && !isImage && h(React.Fragment, null,
                                 h(InputGroup, { label: 'Familia de Fuente' },
                                     h('select', { 
                                         className: 'w-full p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-sky-500',
@@ -302,8 +334,12 @@ const ControlPanel = ({
                                         }
                                     },
                                         h('div', { className: 'flex items-center gap-2 overflow-hidden' },
-                                            el.type === 'draw' ? h(BrushIcon, { className: "w-4 h-4 text-slate-500" }) : h('span', { className: 'text-xs font-bold text-sky-600' }, 'T'),
-                                            h('span', { className: 'truncate text-sm' }, el.type === 'draw' ? 'Trazo Borrador' : (el.text || '').split('\\n')[0])
+                                            el.type === 'draw' ? h(BrushIcon, { className: "w-4 h-4 text-slate-500" }) : (
+                                                el.type === 'image' ? h(ImageIcon, { className: "w-4 h-4 text-emerald-600" }) : h('span', { className: 'text-xs font-bold text-sky-600' }, 'T')
+                                            ),
+                                            h('span', { className: 'truncate text-sm' }, 
+                                                el.type === 'draw' ? 'Trazo Borrador' : (el.type === 'image' ? 'Imagen Importada' : (el.text || '').split('\\n')[0])
+                                            )
                                         ),
                                         h('button', { onClick: (e) => { e.stopPropagation(); deleteElement(el.id); }, className: 'text-slate-400 hover:text-red-500' }, h(TrashIcon, { className: 'w-4 h-4' }))
                                     )
@@ -430,6 +466,7 @@ function App() {
     const canvasRef = useRef(null);
     const renderTaskRef = useRef(null);
     const fileInputRef = useRef(null);
+    const imageInputRef = useRef(null); // Ref para input de imagen
     const fontsCache = useRef({});
     const previewContainerRef = useRef(null);
     const elementsRef = useRef(elements); // Ref for event listeners
@@ -748,6 +785,32 @@ function App() {
         setElementsWithHistory(prev => [...prev, newElement]);
         setSelectedElementId(newElement.id);
     };
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const ratio = img.width / img.height;
+                const width = 200; // Ancho inicial
+                const height = width / ratio;
+                
+                addElement({
+                    type: 'image',
+                    src: event.target.result,
+                    width,
+                    height,
+                    aspectRatio: ratio,
+                    opacity: 1
+                });
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    };
     
     const duplicateElement = () => {
         if (!selectedElement) return;
@@ -869,10 +932,26 @@ function App() {
             if (resizeDirection) {
                 if (resizeDirection === 'right') {
                     const newWidth = Math.max(20, elementStartWidth + dx);
-                    setElements(prev => prev.map(el => el.id === element.id ? { ...el, width: newWidth } : el));
+                    
+                    setElements(prev => prev.map(el => {
+                        if (el.id !== element.id) return el;
+                        const updates = { width: newWidth };
+                        if (el.type === 'image' && el.aspectRatio) {
+                             updates.height = newWidth / el.aspectRatio;
+                        }
+                        return { ...el, ...updates };
+                    }));
+
                 } else if (resizeDirection === 'left') {
                     const newWidth = Math.max(20, elementStartWidth - dx);
-                    setElements(prev => prev.map(el => el.id === element.id ? { ...el, width: newWidth, x: elementStartX + dx } : el));
+                    setElements(prev => prev.map(el => {
+                        if (el.id !== element.id) return el;
+                        const updates = { width: newWidth, x: elementStartX + dx };
+                        if (el.type === 'image' && el.aspectRatio) {
+                             updates.height = newWidth / el.aspectRatio;
+                        }
+                        return { ...el, ...updates };
+                    }));
                 }
             } else {
                 setElements(prev => prev.map(el => el.id === element.id ? { ...el, x: elementStartX + dx, y: elementStartY + dy } : el));
@@ -962,6 +1041,36 @@ function App() {
                         }
                         continue;
                     }
+                    
+                    if (el.type === 'image') {
+                        try {
+                            let pdfImage;
+                            const imgBytes = await fetch(el.src).then(res => res.arrayBuffer());
+                            
+                            // Naive MIME detection
+                            if (el.src.startsWith('data:image/png')) {
+                                pdfImage = await pdfDoc.embedPng(imgBytes);
+                            } else {
+                                pdfImage = await pdfDoc.embedJpg(imgBytes);
+                            }
+
+                            const scaledX = el.x * scaleFactor;
+                            const scaledY = el.y * scaleFactor;
+                            const scaledWidth = el.width * scaleFactor;
+                            const scaledHeight = el.height * scaleFactor;
+
+                            page.drawImage(pdfImage, {
+                                x: scaledX,
+                                y: height - scaledY - scaledHeight,
+                                width: scaledWidth,
+                                height: scaledHeight,
+                                opacity: el.opacity || 1
+                            });
+                        } catch (err) {
+                            console.error("Error embedding image", err);
+                        }
+                        continue;
+                    }
 
                     // --- TEXT RENDERING ---
                     const scaledX = el.x * scaleFactor;
@@ -1011,8 +1120,7 @@ function App() {
                     const lineHeightPx = el.lineHeight * scaledFontSize;
                     const textColor = rgb(r, g, b);
 
-                    // Manual Text Wrapping and Line Breaking to avoid WinAnsi encoding issues with StandardFonts
-                    // Split by newline chars, remove CR to be safe
+                    // Manual Text Wrapping and Line Breaking
                     const paragraphs = textContent.replace(/\\n/g, '\n').replace(/\r/g, '').replace(/\t/g, ' ').split('\n');
                     let currentY = height - scaledY - scaledFontSize; // Starting Baseline
 
@@ -1115,7 +1223,8 @@ function App() {
                 elements, deleteElement, setSelectedElementId,
                 undo, redo, canUndo: historyIndex > 0, canRedo: historyIndex < history.length - 1,
                 savedSignatures, saveSignature, loadSignature, deleteSignature,
-                savedTemplates, saveTemplate, loadTemplate, deleteTemplate
+                savedTemplates, saveTemplate, loadTemplate, deleteTemplate,
+                handleImageUpload, imageInputRef
             }),
 
             h('div', { className: 'lg:col-span-2 bg-slate-500 p-4 lg:p-8 preview-container', ref: previewContainerRef, onClick: () => setSelectedElementId(null) },
@@ -1160,31 +1269,60 @@ function App() {
                                     });
                                 })
                         ),
-                        // Render Text Elements
-                        ...elements.filter(el => el.page === currentPage && el.type === 'text').map(element => h('div', {
-                            key: element.id,
-                            className: `text-element ${selectedElementId === element.id ? 'selected' : ''}`,
-                            style: {
-                                left: element.x,
-                                top: element.y,
-                                width: element.width,
-                                fontSize: element.fontSize,
-                                fontFamily: `"${element.fontFamily}"`,
-                                fontWeight: element.fontWeight,
-                                textAlign: element.textAlign,
-                                lineHeight: element.lineHeight,
-                                color: element.color,
-                                zIndex: 2
-                            },
-                            onMouseDown: (e) => handleElementMouseDown(e, element),
-                            onClick: (e) => { e.stopPropagation(); setSelectedElementId(element.id); }
-                        }, 
-                            (element.text || '').replace(/\\n/g, '\n'),
-                            selectedElementId === element.id && !isDrawingMode && h(React.Fragment, null,
-                                h('div', { className: 'resize-handle resize-handle-left', onMouseDown: e => handleElementMouseDown(e, element, 'left') }),
-                                h('div', { className: 'resize-handle resize-handle-right', onMouseDown: e => handleElementMouseDown(e, element, 'right') })
-                            )
-                        ))
+                        // Render Elements
+                        ...elements.filter(el => el.page === currentPage && el.type !== 'draw').map(element => {
+                            if (element.type === 'image') {
+                                return h('div', {
+                                    key: element.id,
+                                    className: `text-element ${selectedElementId === element.id ? 'selected' : ''}`,
+                                    style: {
+                                        left: element.x,
+                                        top: element.y,
+                                        width: element.width,
+                                        height: element.height,
+                                        zIndex: 2
+                                    },
+                                    onMouseDown: (e) => handleElementMouseDown(e, element),
+                                    onClick: (e) => { e.stopPropagation(); setSelectedElementId(element.id); }
+                                },
+                                    h('img', { 
+                                        src: element.src, 
+                                        className: 'w-full h-full object-contain pointer-events-none',
+                                        style: { opacity: element.opacity || 1 }
+                                    }),
+                                    selectedElementId === element.id && !isDrawingMode && h(React.Fragment, null,
+                                        h('div', { className: 'resize-handle resize-handle-left', onMouseDown: e => handleElementMouseDown(e, element, 'left') }),
+                                        h('div', { className: 'resize-handle resize-handle-right', onMouseDown: e => handleElementMouseDown(e, element, 'right') })
+                                    )
+                                );
+                            }
+                            
+                            // Text Elements
+                            return h('div', {
+                                key: element.id,
+                                className: `text-element ${selectedElementId === element.id ? 'selected' : ''}`,
+                                style: {
+                                    left: element.x,
+                                    top: element.y,
+                                    width: element.width,
+                                    fontSize: element.fontSize,
+                                    fontFamily: `"${element.fontFamily}"`,
+                                    fontWeight: element.fontWeight,
+                                    textAlign: element.textAlign,
+                                    lineHeight: element.lineHeight,
+                                    color: element.color,
+                                    zIndex: 2
+                                },
+                                onMouseDown: (e) => handleElementMouseDown(e, element),
+                                onClick: (e) => { e.stopPropagation(); setSelectedElementId(element.id); }
+                            }, 
+                                (element.text || '').replace(/\\n/g, '\n'),
+                                selectedElementId === element.id && !isDrawingMode && h(React.Fragment, null,
+                                    h('div', { className: 'resize-handle resize-handle-left', onMouseDown: e => handleElementMouseDown(e, element, 'left') }),
+                                    h('div', { className: 'resize-handle resize-handle-right', onMouseDown: e => handleElementMouseDown(e, element, 'right') })
+                                )
+                            );
+                        })
                     ),
                     h(ZoomControls)
                 )
