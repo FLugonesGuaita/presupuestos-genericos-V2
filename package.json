@@ -1,5 +1,5 @@
 {
-  "name": "pdf-template-filler",
+  "name": "docuflow",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,6 +12,7 @@
     "react": "18.2.0",
     "pdfjs-dist": "4.4.168",
     "pdf-lib": "1.17.1",
+    "@pdf-lib/fontkit": "1.1.1",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {

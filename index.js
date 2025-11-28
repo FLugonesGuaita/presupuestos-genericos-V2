@@ -1,8 +1,8 @@
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import * as pdfjsLib from "pdfjs-dist";
 import { PDFDocument, rgb } from "pdf-lib";
+import fontkit from "@pdf-lib/fontkit";
 
 // Configuración del Worker para PDF.js
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://esm.sh/pdfjs-dist@4.4.168/build/pdf.worker.mjs";
@@ -70,23 +70,36 @@ const DEFAULT_TEXT_ELEMENT = {
 
 // --- ICONOS ---
 const Icon = ({ path, className = "w-5 h-5" }) => h('svg', { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", fill: "currentColor", className }, h('path', { fillRule: "evenodd", d: path, clipRule: "evenodd" }));
-const UploadIcon = () => h(Icon, { path: "M9.47 1.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1-1.06 1.06L10 3.06 6.28 6.78a.75.75 0 0 1-1.06-1.06l4.25-4.25ZM3.25 9.75a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 0 .75.75h10.5a.75.75 0 0 0 .75-.75V10.5a.75.75 0 0 1 1.5 0v3.75a2.25 2.25 0 0 1-2.25 2.25H4.75A2.25 2.25 0 0 1 2.5 14.25V10.5a.75.75 0 0 1 .75-.75Z" });
-const PlusIcon = () => h(Icon, { path: "M10 3a.75.75 0 0 1 .75.75v6.5h6.5a.75.75 0 0 1 0 1.5h-6.5v6.5a.75.75 0 0 1-1.5 0v-6.5H2.25a.75.75 0 0 1 0-1.5h6.5V3.75A.75.75 0 0 1 10 3Z" });
-const TrashIcon = () => h(Icon, { path: "M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.53 6.53a.75.75 0 0 1 1.06-1.06L10 8.94l2.47-2.47a.75.75 0 1 1 1.06 1.06L11.06 10l2.47 2.47a.75.75 0 1 1-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 0 1-1.06-1.06L8.94 10 6.53 7.53Z" });
+const UploadIcon = ({ className }) => h(Icon, { path: "M9.47 1.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1-1.06 1.06L10 3.06 6.28 6.78a.75.75 0 0 1-1.06-1.06l4.25-4.25ZM3.25 9.75a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 0 .75.75h10.5a.75.75 0 0 0 .75-.75V10.5a.75.75 0 0 1 1.5 0v3.75a2.25 2.25 0 0 1-2.25 2.25H4.75A2.25 2.25 0 0 1 2.5 14.25V10.5a.75.75 0 0 1 .75-.75Z", className });
+const PlusIcon = ({ className }) => h(Icon, { path: "M10 3a.75.75 0 0 1 .75.75v6.5h6.5a.75.75 0 0 1 0 1.5h-6.5v6.5a.75.75 0 0 1-1.5 0v-6.5H2.25a.75.75 0 0 1 0-1.5h6.5V3.75A.75.75 0 0 1 10 3Z", className });
+const TrashIcon = ({ className }) => h(Icon, { path: "M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.53 6.53a.75.75 0 0 1 1.06-1.06L10 8.94l2.47-2.47a.75.75 0 1 1 1.06 1.06L11.06 10l2.47 2.47a.75.75 0 1 1-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 0 1-1.06-1.06L8.94 10 6.53 7.53Z", className });
 const MinusIcon = () => h(Icon, { path: "M3 10a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 10Z" });
 const FitScreenIcon = () => h(Icon, { path: "M3 8.25a.75.75 0 0 1 .75-.75h2.25a.75.75 0 0 1 0 1.5H4.5v2.25a.75.75 0 0 1-1.5 0V8.25ZM15.5 6h2.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V8.25h-2.25a.75.75 0 0 1 0-1.5ZM8.25 3a.75.75 0 0 1 .75.75v2.25h2.25a.75.75 0 0 1 0 1.5H9v2.25a.75.75 0 0 1-1.5 0V7.5H5.25a.75.75 0 0 1 0-1.5H7.5V3.75A.75.75 0 0 1 8.25 3ZM11.75 16a.75.75 0 0 1-.75-.75v-2.25h-2.25a.75.75 0 0 1 0-1.5H11v-2.25a.75.75 0 0 1 1.5 0V11.5h2.25a.75.75 0 0 1 0 1.5H12.5v2.25a.75.75 0 0 1-.75.75Z", clipRule: "evenodd" });
-const BrushIcon = () => h(Icon, { path: "M15.207 3.793a1 1 0 0 1 0 1.414L8.5 12h-3a1 1 0 0 1-1-1v-3l6.793-6.793a1 1 0 0 1 1.414 0ZM11.5 15a2.5 2.5 0 0 0-2.5 2.5h5A2.5 2.5 0 0 0 11.5 15Z" });
-const UndoIcon = () => h(Icon, { path: "M7.65 4.86a.75.75 0 0 1 1.2.7l-.42 2.68 2.68.42a.75.75 0 1 1-.23 1.48l-3.5-.55a.75.75 0 0 1-.61-.61l.55-3.5a.75.75 0 0 1 .33-.62Zm2.59 1.45a6 6 0 1 1-5.18 5.4.75.75 0 0 1 1.5-.15 4.5 4.5 0 1 0 4.29-4.9l.4-.04Z" });
-const RedoIcon = () => h(Icon, { path: "M12.35 4.86a.75.75 0 0 0-1.2.7l.42 2.68-2.68.42a.75.75 0 1 0 .23 1.48l3.5-.55a.75.75 0 0 0 .61-.61l-.55-3.5a.75.75 0 0 0-.33-.62Zm-2.59 1.45a6 6 0 1 0 5.18 5.4.75.75 0 0 0-1.5-.15 4.5 4.5 0 1 1-4.29-4.9l-.4-.04Z" });
-const CopyIcon = () => h(Icon, { path: "M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12a1.5 1.5 0 0 1 .439 1.061V16.5a1.5 1.5 0 0 1-1.5 1.5h-8.5A1.5 1.5 0 0 1 5.5 16.5v-13H7v1.5a1.5 1.5 0 0 0 1.5 1.5h4a1.5 1.5 0 0 0 1.5-1.5v-2H12a.5.5 0 0 0-.5.5v2.5a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1.5Z" });
-const SaveIcon = () => h(Icon, { path: "M10 2a.75.75 0 0 1 .75.75v7.5h7.5a.75.75 0 0 1 0 1.5h-7.5v7.5a.75.75 0 0 1-1.5 0v-7.5h-7.5a.75.75 0 0 1 0-1.5h7.5v-7.5A.75.75 0 0 1 10 2Z" });
-const DiskIcon = () => h(Icon, { path: "M3 3.5A1.5 1.5 0 0 1 4.5 2h6.879a1.5 1.5 0 0 1 1.06.44l4.122 4.12A1.5 1.5 0 0 1 17 7.622V16.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 16.5v-13ZM13.25 9a.75.75 0 0 0-.75.75v.5h-5v-.5a.75.75 0 0 0-1.5 0v.5c0 .414.336.75.75.75h6.5a.75.75 0 0 0 .75-.75v-.5a.75.75 0 0 0-.75-.75Z" });
-const StarIcon = () => h(Icon, { path: "M10 1l2.928 6.255 6.772.955-5 4.975 1.18 6.815L10 16.75l-6.08 3.25 1.18-6.815-5-4.975 6.772-.955L10 1z" });
-const FolderOpenIcon = () => h(Icon, { path: "M2 4.75A.75.75 0 0 1 2.75 4h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 4.75Zm0 10.5a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75ZM2 10a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 10Z" });
-const ImageIcon = () => h(Icon, { path: "M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" });
+const BrushIcon = ({ className }) => h(Icon, { path: "M15.207 3.793a1 1 0 0 1 0 1.414L8.5 12h-3a1 1 0 0 1-1-1v-3l6.793-6.793a1 1 0 0 1 1.414 0ZM11.5 15a2.5 2.5 0 0 0-2.5 2.5h5A2.5 2.5 0 0 0 11.5 15Z", className });
+const UndoIcon = ({ className }) => h(Icon, { path: "M7.65 4.86a.75.75 0 0 1 1.2.7l-.42 2.68 2.68.42a.75.75 0 1 1-.23 1.48l-3.5-.55a.75.75 0 0 1-.61-.61l.55-3.5a.75.75 0 0 1 .33-.62Zm2.59 1.45a6 6 0 1 1-5.18 5.4.75.75 0 0 1 1.5-.15 4.5 4.5 0 1 0 4.29-4.9l.4-.04Z", className });
+const RedoIcon = ({ className }) => h(Icon, { path: "M12.35 4.86a.75.75 0 0 0-1.2.7l.42 2.68-2.68.42a.75.75 0 1 0 .23 1.48l3.5-.55a.75.75 0 0 0 .61-.61l-.55-3.5a.75.75 0 0 0-.33-.62Zm-2.59 1.45a6 6 0 1 0 5.18 5.4.75.75 0 0 0-1.5-.15 4.5 4.5 0 1 1-4.29-4.9l-.4-.04Z", className });
+const CopyIcon = ({ className }) => h(Icon, { path: "M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12a1.5 1.5 0 0 1 .439 1.061V16.5a1.5 1.5 0 0 1-1.5 1.5h-8.5A1.5 1.5 0 0 1 5.5 16.5v-13H7v1.5a1.5 1.5 0 0 0 1.5 1.5h4a1.5 1.5 0 0 0 1.5-1.5v-2H12a.5.5 0 0 0-.5.5v2.5a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1.5Z", className });
+const DiskIcon = ({ className }) => h(Icon, { path: "M3 3.5A1.5 1.5 0 0 1 4.5 2h6.879a1.5 1.5 0 0 1 1.06.44l4.122 4.12A1.5 1.5 0 0 1 17 7.622V16.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 16.5v-13ZM13.25 9a.75.75 0 0 0-.75.75v.5h-5v-.5a.75.75 0 0 0-1.5 0v.5c0 .414.336.75.75.75h6.5a.75.75 0 0 0 .75-.75v-.5a.75.75 0 0 0-.75-.75Z", className });
+const StarIcon = ({ className }) => h(Icon, { path: "M10 1l2.928 6.255 6.772.955-5 4.975 1.18 6.815L10 16.75l-6.08 3.25 1.18-6.815-5-4.975 6.772-.955L10 1z", className });
+const FolderOpenIcon = ({ className }) => h(Icon, { path: "M2 4.75A.75.75 0 0 1 2.75 4h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 4.75Zm0 10.5a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1-.75-.75ZM2 10a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 10Z", className });
+const ImageIcon = ({ className }) => h(Icon, { path: "M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z", className });
+const DocIcon = ({ className }) => h(Icon, { path: "M3 3.5A1.5 1.5 0 0 1 4.5 2h6.879a1.5 1.5 0 0 1 1.06.44l4.122 4.12A1.5 1.5 0 0 1 17 7.622V16.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 16.5v-13Zm13.25 9a.75.75 0 0 0-.75.75v.5h-5v-.5a.75.75 0 0 0-1.5 0v.5c0 .414.336.75.75.75h6.5a.75.75 0 0 0 .75-.75v-.5a.75.75 0 0 0-.75-.75Z", className });
+const CheckIcon = ({ className }) => h(Icon, { path: "M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z", className });
+const DownloadIcon = ({ className }) => h(Icon, { path: "M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75zM2.25 13.5a.75.75 0 000 1.5h15.5a.75.75 0 000-1.5H2.25z", className });
+const UploadFileIcon = ({ className }) => h(Icon, { path: "M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 101.09 1.03l2.955-3.129v8.614zM2.25 13.5a.75.75 0 000 1.5h15.5a.75.75 0 000-1.5H2.25z", className });
 
-const InputGroup = ({ label, children }) => h('div', { className: 'flex flex-col gap-1' }, h('label', { className: 'text-sm font-medium text-slate-600' }, label), children);
-const NumberInput = ({ value, onChange }) => h('input', { type: 'number', className: 'w-full p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-sky-500', value, onChange });
+const InputGroup = ({ label, children }) => h('div', { className: 'flex flex-col gap-1.5' }, h('label', { className: 'text-[10px] uppercase tracking-wider font-bold text-slate-500' }, label), children);
+const NumberInput = ({ value, onChange }) => h('input', { type: 'number', className: 'w-full p-2 border border-slate-200 rounded-md bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none', value, onChange });
+
+const Notification = ({ message, type, onClose }) => {
+    if (!message) return null;
+    return h('div', { className: 'fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 animate-in slide-in-from-bottom-2 fade-in duration-300' },
+        h('div', { className: `flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border ${type === 'error' ? 'bg-red-50 border-red-200 text-red-800' : 'bg-slate-800 border-slate-700 text-white'}` },
+            type === 'success' && h(CheckIcon, { className: "w-5 h-5 text-emerald-400" }),
+            h('span', { className: "text-sm font-medium" }, message)
+        )
+    );
+};
 
 const ControlPanel = ({ 
     pdfDoc, 
@@ -121,146 +134,156 @@ const ControlPanel = ({
     saveTemplate,
     loadTemplate,
     deleteTemplate,
+    exportTemplate,
+    handleImportTemplate,
+    templateInputRef,
     handleImageUpload,
     imageInputRef
 }) => {
     const isDraw = formState.type === 'draw';
     const isImage = formState.type === 'image';
-    const [tab, setTab] = React.useState('tools'); // 'tools' or 'saved'
+    const [tab, setTab] = React.useState('tools'); 
 
-    return h('div', { className: 'flex flex-col h-full bg-white p-4 lg:p-6 border-r border-slate-200 overflow-y-auto' },
+    return h('div', { className: 'flex flex-col h-full bg-white p-5 border-r border-slate-200 shadow-[4px_0_24px_rgba(0,0,0,0.02)] overflow-y-auto z-10' },
         h('div', { className: 'space-y-6 flex-grow' },
-            h('div', { className: 'flex justify-between items-start' },
+            h('div', { className: 'flex justify-between items-center' },
                 h('div', {},
-                    h('h2', { className: 'text-lg font-bold text-slate-800' }, 'Panel de Controles'),
-                    h('p', { className: 'text-sm text-slate-500' }, 'Edita tu PDF.')
+                    h('h2', { className: 'text-lg font-bold text-slate-900 tracking-tight' }, 'Panel de Control'),
+                    h('p', { className: 'text-[10px] text-slate-400 font-semibold tracking-wider uppercase' }, 'HERRAMIENTAS DE EDICIÓN')
                 ),
-                // Botones globales (Undo/Redo)
-                h('div', { className: 'flex gap-1' },
+                h('div', { className: 'flex bg-slate-100 rounded-lg p-1 gap-0.5' },
                     h('button', { 
-                        className: 'p-2 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-600',
+                        className: 'p-1.5 rounded-md hover:bg-white hover:shadow-sm disabled:opacity-30 disabled:hover:shadow-none text-slate-600 transition-all',
                         onClick: undo,
                         disabled: !canUndo,
                         title: 'Deshacer (Ctrl+Z)'
-                    }, h(UndoIcon)),
+                    }, h(UndoIcon, { className: 'w-4 h-4' })),
                     h('button', { 
-                        className: 'p-2 rounded-full hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent text-slate-600',
+                        className: 'p-1.5 rounded-md hover:bg-white hover:shadow-sm disabled:opacity-30 disabled:hover:shadow-none text-slate-600 transition-all',
                         onClick: redo,
                         disabled: !canRedo,
                         title: 'Rehacer (Ctrl+Y)'
-                    }, h(RedoIcon))
+                    }, h(RedoIcon, { className: 'w-4 h-4' }))
                 )
             ),
             
-            !pdfDoc && h('div', { className: 'flex flex-col items-center justify-center text-center p-6 border-2 border-dashed rounded-lg bg-slate-50' },
-                h(UploadIcon, { className: 'w-12 h-12 text-slate-400 mb-2' }),
-                h('p', { className: 'font-semibold' }, 'Sube un archivo PDF'),
-                h('p', { className: 'text-sm text-slate-500 mb-4' }, 'Haz clic en el botón para empezar.'),
+            !pdfDoc && h('div', { className: 'flex flex-col items-center justify-center text-center p-8 border-2 border-dashed border-indigo-100 rounded-xl bg-indigo-50/30 hover:bg-indigo-50/60 transition-colors group' },
+                h('div', { className: 'w-14 h-14 bg-white shadow-sm border border-indigo-100 text-indigo-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300' },
+                     h(UploadIcon, { className: 'w-7 h-7' })
+                ),
+                h('p', { className: 'font-bold text-slate-800 text-base' }, 'Sube tu documento'),
+                h('p', { className: 'text-xs text-slate-500 mb-6 mt-1' }, 'Admite archivos PDF hasta 10MB'),
                  h('button', {
-                    className: 'w-full bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2',
+                    className: 'w-full bg-indigo-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/20 active:scale-95 transition-all flex items-center justify-center gap-2',
                     onClick: () => fileInputRef.current?.click()
-                }, h(UploadIcon), 'Seleccionar PDF'),
+                }, 'Seleccionar PDF Local'),
                 h('input', { ref: fileInputRef, type: 'file', accept: '.pdf', className: 'hidden', onChange: handleFileChange })
             ),
 
             pdfDoc && h(React.Fragment, null, 
-                h('div', { className: 'p-4 bg-sky-50 border border-sky-200 rounded-lg text-sm text-sky-800' },
-                    `PDF cargado: ${pdfFile?.name || ''}. Total de páginas: ${numPages}.`
+                h('div', { className: 'p-3 bg-indigo-50 border border-indigo-100 rounded-xl flex items-center gap-3' },
+                    h('div', { className: "w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0 text-indigo-600"}, 
+                        h(DocIcon, { className: "w-5 h-5" })
+                    ),
+                    h('div', { className: "overflow-hidden" },
+                        h('p', { className: "truncate font-semibold text-sm text-indigo-900" }, pdfFile?.name),
+                        h('p', { className: "text-[10px] uppercase font-bold text-indigo-400" }, `${numPages} PÁGINAS • LISTO`)
+                    )
                 ),
                 
                 // Tabs
-                h('div', { className: 'flex border-b border-slate-200 mt-4' },
+                h('div', { className: 'flex p-1 bg-slate-100 rounded-lg' },
                     h('button', {
-                        className: `flex-1 py-2 text-sm font-medium ${tab === 'tools' ? 'text-sky-600 border-b-2 border-sky-600' : 'text-slate-500 hover:text-slate-700'}`,
+                        className: `flex-1 py-1.5 text-xs font-bold uppercase tracking-wide rounded-md transition-all ${tab === 'tools' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`,
                         onClick: () => setTab('tools')
-                    }, 'Herramientas'),
+                    }, 'Diseño'),
                     h('button', {
-                        className: `flex-1 py-2 text-sm font-medium ${tab === 'saved' ? 'text-sky-600 border-b-2 border-sky-600' : 'text-slate-500 hover:text-slate-700'}`,
+                        className: `flex-1 py-1.5 text-xs font-bold uppercase tracking-wide rounded-md transition-all ${tab === 'saved' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`,
                         onClick: () => setTab('saved')
-                    }, 'Guardados')
+                    }, 'Biblioteca')
                 ),
                 
-                h('div', { className: 'space-y-4 pt-4' },
+                h('div', { className: 'space-y-4' },
                     
                     // --- TAB: TOOLS ---
                     tab === 'tools' && h(React.Fragment, null,
                         // Toolbar
-                        h('div', { className: 'flex flex-col gap-3 pb-4 border-b' },
-                            h('div', { className: 'grid grid-cols-2 gap-2' },
+                        h('div', { className: 'flex flex-col gap-3 pb-5 border-b border-slate-100' },
+                            h('div', { className: 'grid grid-cols-2 gap-2.5' },
                                 h('button', { 
-                                    className: `w-full font-bold py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm border ${!isDrawingMode ? 'bg-sky-600 text-white border-sky-600' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'}`, 
+                                    className: `w-full font-semibold py-2.5 px-3 rounded-lg transition-all flex items-center justify-center gap-2 text-sm border ${!isDrawingMode ? 'bg-white border-indigo-200 text-indigo-700 hover:border-indigo-300 hover:bg-indigo-50 shadow-sm ring-1 ring-indigo-500/10' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`, 
                                     onClick: () => { 
                                         if(isDrawingMode) toggleDrawingMode(); 
                                         addElement(DEFAULT_TEXT_ELEMENT); 
                                     } 
-                                }, h(PlusIcon, { className: "w-4 h-4" }), 'Añadir Texto'),
+                                }, h(PlusIcon, { className: "w-4 h-4" }), 'Texto'),
                                 
                                 h('button', { 
-                                    className: `w-full font-bold py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm border bg-white text-slate-700 border-slate-300 hover:bg-slate-50`, 
+                                    className: `w-full font-semibold py-2.5 px-3 rounded-lg transition-all flex items-center justify-center gap-2 text-sm border bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-sm`, 
                                     onClick: () => imageInputRef.current?.click()
-                                }, h(ImageIcon, { className: "w-4 h-4" }), 'Añadir Imagen'),
+                                }, h(ImageIcon, { className: "w-4 h-4" }), 'Imagen'),
                                 h('input', { ref: imageInputRef, type: 'file', accept: 'image/*', className: 'hidden', onChange: handleImageUpload }),
 
                                 h('button', { 
-                                    className: `col-span-2 w-full font-bold py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm border ${isDrawingMode ? 'bg-slate-700 text-white border-slate-700' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'}`, 
+                                    className: `col-span-2 w-full font-semibold py-2.5 px-3 rounded-lg transition-all flex items-center justify-center gap-2 text-sm border ${isDrawingMode ? 'bg-slate-800 text-white border-slate-800 shadow-inner' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-sm'}`, 
                                     onClick: toggleDrawingMode 
-                                }, h(BrushIcon, { className: "w-4 h-4" }), isDrawingMode ? 'Pincel Activo' : 'Pincel')
+                                }, h(BrushIcon, { className: "w-4 h-4" }), isDrawingMode ? 'Modo Dibujo Activo' : 'Dibujar / Firmar')
                             ),
                             
                             // Brush Settings
-                            isDrawingMode && h('div', { className: 'bg-slate-100 p-3 rounded-md space-y-2 animate-in fade-in slide-in-from-top-2 duration-200' },
-                                h('label', { className: 'text-xs font-semibold text-slate-600 uppercase flex justify-between' }, 
-                                    'Grosor del Pincel', 
-                                    h('span', {}, `${brushSize}px`)
+                            isDrawingMode && h('div', { className: 'bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3 animate-in fade-in slide-in-from-top-2 duration-200' },
+                                h('label', { className: 'text-[10px] font-bold text-slate-400 uppercase flex justify-between tracking-wide' }, 
+                                    'Grosor del Trazo', 
+                                    h('span', { className: "text-slate-900" }, `${brushSize}px`)
                                 ),
                                 h('input', { 
                                     type: 'range', 
-                                    min: '5', 
-                                    max: '50', 
+                                    min: '1', 
+                                    max: '20', 
                                     value: brushSize, 
                                     onChange: (e) => setBrushSize(parseInt(e.target.value)),
-                                    className: 'w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-slate-600'
+                                    className: 'w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-800'
                                 }),
-                                h('p', { className: 'text-xs text-slate-500' }, 'Dibuja sobre el PDF para borrar contenido.')
+                                h('p', { className: 'text-xs text-slate-500 leading-relaxed' }, 'Usa el cursor para dibujar firmas o tachar contenido existente.')
                             )
                         ),
 
                         // Element Properties
                         selectedElementId && !isDrawingMode && h('div', { className: 'space-y-4 animate-in fade-in duration-200' },
-                            h('div', { className: 'flex justify-between items-center'},
-                                h('h3', { className: 'font-semibold text-md' }, 
-                                    isDraw ? 'Editar Trazo' : (isImage ? 'Editar Imagen' : 'Editar Texto')
+                            h('div', { className: 'flex justify-between items-center pb-2 border-b border-slate-100'},
+                                h('h3', { className: 'font-bold text-xs text-slate-900 uppercase tracking-wider' }, 
+                                    isDraw ? 'AJUSTES DE TRAZO' : (isImage ? 'AJUSTES DE IMAGEN' : 'AJUSTES DE TEXTO')
                                 ),
-                                h('div', { className: 'flex gap-2' },
+                                h('div', { className: 'flex gap-1' },
                                     !isDraw && !isImage && h('button', {
                                         onClick: duplicateElement,
-                                        className: 'text-xs flex items-center gap-1 text-sky-600 hover:text-sky-800 font-medium px-2 py-1 bg-sky-50 rounded border border-sky-100',
+                                        className: 'p-1.5 rounded text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors',
                                         title: 'Duplicar (Ctrl+D)'
-                                    }, h(CopyIcon, { className: "w-3 h-3"}), 'Clonar'),
+                                    }, h(CopyIcon, { className: "w-4 h-4"})),
                                     !isDraw && !isImage && h('button', {
                                         onClick: () => {
                                             saveSignature();
                                             setTab('saved');
                                         },
-                                        className: 'text-xs flex items-center gap-1 text-emerald-600 hover:text-emerald-800 font-medium px-2 py-1 bg-emerald-50 rounded border border-emerald-100',
-                                        title: 'Guardar como Firma'
-                                    }, h(DiskIcon, { className: "w-3 h-3"}), 'Guardar')
+                                        className: 'p-1.5 rounded text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors',
+                                        title: 'Guardar en Biblioteca'
+                                    }, h(DiskIcon, { className: "w-4 h-4"}))
                                 )
                             ),
                             
-                            !isDraw && !isImage && h(InputGroup, { label: 'Texto' }, h('textarea', {
-                                className: 'w-full p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-sky-500',
+                            !isDraw && !isImage && h(InputGroup, { label: 'Contenido' }, h('textarea', {
+                                className: 'w-full p-2.5 border border-slate-200 rounded-lg bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none resize-none',
                                 rows: 3,
                                 value: formState.text || '',
                                 onChange: e => updateSelectedElement({ text: e.target.value })
                             })),
 
-                            !isDraw && h('div', { className: 'grid grid-cols-2 gap-4' },
+                            !isDraw && h('div', { className: 'grid grid-cols-2 gap-3' },
                                 h(InputGroup, { label: 'Posición X' }, h(NumberInput, { value: Math.round(formState.x), onChange: e => updateSelectedElement({ x: parseInt(e.target.value, 10) }) })),
                                 h(InputGroup, { label: 'Posición Y' }, h(NumberInput, { value: Math.round(formState.y), onChange: e => updateSelectedElement({ y: parseInt(e.target.value, 10) }) }))
                             ),
 
-                            !isDraw && h('div', { className: 'grid grid-cols-2 gap-4' },
+                            !isDraw && h('div', { className: 'grid grid-cols-2 gap-3' },
                                 h(InputGroup, { label: 'Ancho' }, h(NumberInput, { value: Math.round(formState.width), onChange: e => {
                                     const val = parseInt(e.target.value, 10);
                                     if(isImage) {
@@ -269,79 +292,79 @@ const ControlPanel = ({
                                         updateSelectedElement({ width: val });
                                     }
                                 }})),
-                                !isImage && h(InputGroup, { label: 'Tamaño Fuente' }, h(NumberInput, { value: formState.fontSize, onChange: e => updateSelectedElement({ fontSize: parseInt(e.target.value, 10) }) })),
-                                isImage && h(InputGroup, { label: 'Alto (Auto)' }, h(NumberInput, { value: Math.round(formState.height || 0), onChange: () => {} })) // Read-only approx
+                                !isImage && h(InputGroup, { label: 'Tamaño (px)' }, h(NumberInput, { value: formState.fontSize, onChange: e => updateSelectedElement({ fontSize: parseInt(e.target.value, 10) }) })),
+                                isImage && h(InputGroup, { label: 'Alto' }, h(NumberInput, { value: Math.round(formState.height || 0), onChange: () => {} })) 
                             ),
 
                             isImage && h(InputGroup, { label: 'Opacidad' }, 
-                                h('div', { className: 'flex items-center gap-2' },
+                                h('div', { className: 'flex items-center gap-3 pt-2' },
                                     h('input', { 
                                         type: 'range', min: '0.1', max: '1', step: '0.1', 
                                         value: formState.opacity || 1, 
                                         onChange: e => updateSelectedElement({ opacity: parseFloat(e.target.value) }),
-                                        className: 'w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-sky-600'
+                                        className: 'w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600'
                                     }),
-                                    h('span', { className: 'text-xs text-slate-600 w-8' }, formState.opacity || 1)
+                                    h('span', { className: 'text-xs font-mono text-slate-600 w-8 text-right' }, `${Math.round((formState.opacity || 1) * 100)}%`)
                                 )
                             ),
 
                             !isDraw && !isImage && h(React.Fragment, null,
-                                h(InputGroup, { label: 'Familia de Fuente' },
+                                h(InputGroup, { label: 'Tipografía' },
                                     h('select', { 
-                                        className: 'w-full p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-sky-500',
+                                        className: 'w-full p-2 border border-slate-200 rounded-md bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none',
                                         value: formState.fontFamily,
                                         onChange: e => updateSelectedElement({ fontFamily: e.target.value }) 
                                     }, ...FONT_FAMILIES.map(font => h('option', { value: font.name }, font.label || font.name)))
                                 ),
-                                h('div', { className: 'grid grid-cols-2 gap-4' },
-                                    h(InputGroup, { label: 'Peso' }, h('select', { className: 'w-full p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-sky-500', value: formState.fontWeight, onChange: e => updateSelectedElement({ fontWeight: e.target.value }) }, h('option', { value: 'normal' }, 'Normal'), h('option', { value: 'bold' }, 'Negrita'))),
-                                    h(InputGroup, { label: 'Alineación' }, h('select', { className: 'w-full p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-sky-500', value: formState.textAlign, onChange: e => updateSelectedElement({ textAlign: e.target.value }) }, h('option', { value: 'left' }, 'Izquierda'), h('option', { value: 'center' }, 'Centro'), h('option', { value: 'right' }, 'Derecha')))
+                                h('div', { className: 'grid grid-cols-2 gap-3' },
+                                    h(InputGroup, { label: 'Peso' }, h('select', { className: 'w-full p-2 border border-slate-200 rounded-md bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none', value: formState.fontWeight, onChange: e => updateSelectedElement({ fontWeight: e.target.value }) }, h('option', { value: 'normal' }, 'Normal'), h('option', { value: 'bold' }, 'Negrita'))),
+                                    h(InputGroup, { label: 'Alineación' }, h('select', { className: 'w-full p-2 border border-slate-200 rounded-md bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none', value: formState.textAlign, onChange: e => updateSelectedElement({ textAlign: e.target.value }) }, h('option', { value: 'left' }, 'Izquierda'), h('option', { value: 'center' }, 'Centro'), h('option', { value: 'right' }, 'Derecha')))
                                 ),
-                                h('div', { className: 'space-y-2' },
-                                        h('label', { className: 'text-sm font-medium text-slate-600' }, 'Color'),
+                                h('div', { className: 'space-y-2 pt-1' },
+                                        h('label', { className: 'text-[10px] uppercase tracking-wider font-bold text-slate-500' }, 'Color de Tinta'),
                                         h('div', { className: 'flex gap-2 mb-2' },
                                             PEN_COLORS.map(c => h('button', {
                                                 key: c,
                                                 onClick: () => updateSelectedElement({ color: c }),
-                                                className: `w-6 h-6 rounded-full border border-slate-300 shadow-sm ${formState.color === c ? 'ring-2 ring-offset-1 ring-sky-500' : ''}`,
+                                                className: `w-7 h-7 rounded-full border border-slate-200 shadow-sm transition-transform hover:scale-110 ${formState.color === c ? 'ring-2 ring-offset-2 ring-indigo-500 scale-110' : ''}`,
                                                 style: { backgroundColor: c }
                                             }))
                                         ),
-                                        h('div', { className: 'grid grid-cols-2 gap-4 items-center' },
-                                            h(InputGroup, { label: 'Interlineado' }, h(NumberInput, { value: formState.lineHeight, onChange: e => updateSelectedElement({ lineHeight: parseFloat(e.target.value) }) })),
-                                            h(InputGroup, { label: 'Personalizado' }, h('input', { type: 'color', className: 'w-full h-10 border-0 cursor-pointer rounded-md', value: formState.color, onChange: e => updateSelectedElement({ color: e.target.value }) }))
+                                        h('div', { className: 'grid grid-cols-2 gap-3 items-center' },
+                                            h(InputGroup, { label: 'Espaciado' }, h(NumberInput, { value: formState.lineHeight, onChange: e => updateSelectedElement({ lineHeight: parseFloat(e.target.value) }) })),
+                                            h(InputGroup, { label: 'Hex' }, h('input', { type: 'color', className: 'w-full h-9 p-0.5 border border-slate-200 rounded-md cursor-pointer', value: formState.color, onChange: e => updateSelectedElement({ color: e.target.value }) }))
                                         )
                                 )
                             ),
                             
                             h('button', { 
-                                 className: 'w-full bg-red-50 text-red-600 border border-red-200 font-bold py-2 px-4 rounded-lg hover:bg-red-100 transition-colors flex items-center justify-center gap-2 text-sm mt-4', 
+                                 className: 'w-full bg-white text-red-600 border border-red-200 font-medium py-2 px-4 rounded-lg hover:bg-red-50 hover:border-red-300 transition-colors flex items-center justify-center gap-2 text-sm mt-6', 
                                  onClick: () => deleteElement(selectedElementId)
-                             }, h(TrashIcon, { className: "w-4 h-4" }), 'Eliminar (Supr)')
+                             }, h(TrashIcon, { className: "w-4 h-4" }), 'Eliminar Elemento')
                         ),
                         
                         // Layer List
-                        elements.filter(el => el.page === currentPage).length > 0 && h('div', { className: 'border-t pt-4' },
-                            h('h3', { className: 'font-semibold text-md mb-2' }, `Capas en Página ${currentPage}`),
-                            h('ul', { className: 'space-y-2 max-h-48 overflow-y-auto' }, 
+                        elements.filter(el => el.page === currentPage).length > 0 && h('div', { className: 'border-t border-slate-100 pt-5 mt-4' },
+                            h('h3', { className: 'font-bold text-[10px] text-slate-400 uppercase tracking-widest mb-3' }, `CAPAS (PÁG. ${currentPage})`),
+                            h('ul', { className: 'space-y-1.5 max-h-48 overflow-y-auto pr-1' }, 
                                 ...elements.filter(el => el.page === currentPage).map(el => 
                                     h('li', { 
                                         key: el.id, 
-                                        className: `flex items-center justify-between p-2 rounded-md transition-colors cursor-pointer ${selectedElementId === el.id ? 'bg-sky-100' : 'bg-slate-50'}`,
+                                        className: `flex items-center justify-between p-2 rounded-lg transition-all cursor-pointer border ${selectedElementId === el.id ? 'bg-indigo-50 border-indigo-200 shadow-sm' : 'bg-white border-transparent hover:bg-slate-50'}`,
                                         onClick: () => {
                                             if (isDrawingMode) toggleDrawingMode();
                                             setSelectedElementId(el.id);
                                         }
                                     },
-                                        h('div', { className: 'flex items-center gap-2 overflow-hidden' },
-                                            el.type === 'draw' ? h(BrushIcon, { className: "w-4 h-4 text-slate-500" }) : (
-                                                el.type === 'image' ? h(ImageIcon, { className: "w-4 h-4 text-emerald-600" }) : h('span', { className: 'text-xs font-bold text-sky-600' }, 'T')
+                                        h('div', { className: 'flex items-center gap-3 overflow-hidden' },
+                                            el.type === 'draw' ? h(BrushIcon, { className: "w-4 h-4 text-slate-400" }) : (
+                                                el.type === 'image' ? h(ImageIcon, { className: "w-4 h-4 text-emerald-500" }) : h('span', { className: 'flex-shrink-0 w-5 h-5 flex items-center justify-center bg-slate-100 text-slate-500 text-[10px] font-bold rounded' }, 'T')
                                             ),
-                                            h('span', { className: 'truncate text-sm' }, 
-                                                el.type === 'draw' ? 'Trazo Borrador' : (el.type === 'image' ? 'Imagen Importada' : (el.text || '').split('\\n')[0])
+                                            h('span', { className: 'truncate text-sm text-slate-700 font-medium' }, 
+                                                el.type === 'draw' ? 'Trazo Manual' : (el.type === 'image' ? 'Imagen' : (el.text || '').split('\\n')[0])
                                             )
                                         ),
-                                        h('button', { onClick: (e) => { e.stopPropagation(); deleteElement(el.id); }, className: 'text-slate-400 hover:text-red-500' }, h(TrashIcon, { className: 'w-4 h-4' }))
+                                        h('button', { onClick: (e) => { e.stopPropagation(); deleteElement(el.id); }, className: 'text-slate-300 hover:text-red-500 transition-colors' }, h(TrashIcon, { className: 'w-4 h-4' }))
                                     )
                                 )
                             )
@@ -352,24 +375,26 @@ const ControlPanel = ({
                     tab === 'saved' && h(React.Fragment, null,
                         
                         // Saved Signatures Section
-                        h('div', { className: 'space-y-3 pb-4 border-b' },
-                            h('div', { className: 'flex items-center gap-2' },
-                                h(StarIcon, { className: "text-amber-500 w-5 h-5" }),
-                                h('h3', { className: 'font-semibold text-slate-800' }, 'Mis Firmas / Textos')
+                        h('div', { className: 'space-y-3 pb-6 border-b border-slate-100' },
+                            h('div', { className: 'flex items-center gap-2 mb-2' },
+                                h('div', { className: "p-1.5 bg-amber-100 rounded-md" }, h(StarIcon, { className: "text-amber-600 w-4 h-4" })),
+                                h('h3', { className: 'font-bold text-slate-700 text-sm' }, 'Elementos Guardados')
                             ),
-                            h('p', { className: 'text-xs text-slate-500' }, 'Haz clic para añadir al documento.'),
                             savedSignatures.length === 0 
-                                ? h('p', { className: 'text-sm text-slate-400 italic' }, 'No hay firmas guardadas. Selecciona un texto y dale a "Guardar".')
-                                : h('div', { className: 'space-y-2 max-h-40 overflow-y-auto' },
+                                ? h('div', { className: "p-4 bg-slate-50 rounded-lg border border-dashed border-slate-200 text-center" }, 
+                                    h('p', { className: 'text-xs text-slate-400' }, 'No tienes firmas guardadas.'),
+                                    h('p', { className: 'text-[10px] text-slate-300 mt-1' }, 'Selecciona un texto y pulsa el icono de guardar.')
+                                  )
+                                : h('div', { className: 'space-y-2 max-h-48 overflow-y-auto pr-1' },
                                     savedSignatures.map((sig, idx) => 
                                         h('div', { key: idx, className: 'flex items-center gap-2 group' },
                                             h('button', {
                                                 onClick: () => loadSignature(sig),
-                                                className: 'flex-grow text-left p-2 rounded border border-slate-200 hover:bg-slate-50 text-sm truncate font-medium text-slate-700'
+                                                className: 'flex-grow text-left p-2.5 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 hover:shadow-sm text-sm truncate font-medium text-slate-600 bg-white transition-all'
                                             }, sig.text.substring(0, 30) + (sig.text.length > 30 ? '...' : '')),
                                             h('button', {
                                                 onClick: () => deleteSignature(idx),
-                                                className: 'text-slate-300 hover:text-red-500 p-1'
+                                                className: 'text-slate-300 hover:text-red-500 p-1.5 hover:bg-red-50 rounded transition-colors'
                                             }, h(TrashIcon, { className: "w-4 h-4" }))
                                         )
                                     )
@@ -377,32 +402,44 @@ const ControlPanel = ({
                         ),
 
                         // Saved Templates Section
-                        h('div', { className: 'space-y-3 pt-2' },
-                            h('div', { className: 'flex items-center gap-2' },
-                                h(FolderOpenIcon, { className: "text-sky-600 w-5 h-5" }),
-                                h('h3', { className: 'font-semibold text-slate-800' }, 'Plantillas de Documento')
+                        h('div', { className: 'space-y-3 pt-4' },
+                             h('div', { className: 'flex items-center gap-2 mb-2' },
+                                h('div', { className: "p-1.5 bg-indigo-100 rounded-md" }, h(FolderOpenIcon, { className: "text-indigo-600 w-4 h-4" })),
+                                h('h3', { className: 'font-bold text-slate-700 text-sm' }, 'Mis Plantillas')
                             ),
-                             h('p', { className: 'text-xs text-slate-500' }, 'Guarda el estado actual para usarlo luego. (Requiere cargar el mismo PDF de fondo).'),
-                             h('button', {
-                                onClick: saveTemplate,
-                                className: 'w-full border border-sky-600 text-sky-600 hover:bg-sky-50 font-semibold py-2 rounded text-sm flex items-center justify-center gap-2'
-                            }, h(DiskIcon, { className: "w-4 h-4" }), 'Guardar Proyecto Actual'),
+                             h('div', { className: "flex gap-2 mb-3" },
+                                h('button', {
+                                    onClick: saveTemplate,
+                                    className: 'flex-1 border border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 font-semibold py-2 rounded-lg text-xs uppercase tracking-wide flex items-center justify-center gap-2 transition-all'
+                                }, h(DiskIcon, { className: "w-4 h-4" }), 'Guardar'),
+                                h('button', {
+                                    onClick: exportTemplate,
+                                    className: 'flex-1 border border-slate-200 text-slate-600 hover:bg-slate-50 font-semibold py-2 rounded-lg text-xs uppercase tracking-wide flex items-center justify-center gap-2 transition-all',
+                                    title: "Descargar copia de seguridad"
+                                }, h(DownloadIcon, { className: "w-4 h-4" }), 'Exportar'),
+                                h('button', {
+                                    onClick: () => templateInputRef.current?.click(),
+                                    className: 'flex-1 border border-slate-200 text-slate-600 hover:bg-slate-50 font-semibold py-2 rounded-lg text-xs uppercase tracking-wide flex items-center justify-center gap-2 transition-all',
+                                    title: "Cargar copia de seguridad"
+                                }, h(UploadFileIcon, { className: "w-4 h-4" }), 'Importar'),
+                                h('input', { ref: templateInputRef, type: 'file', accept: '.json', className: 'hidden', onChange: handleImportTemplate })
+                             ),
 
                             savedTemplates.length === 0 
-                                ? h('p', { className: 'text-sm text-slate-400 italic mt-2' }, 'No hay plantillas guardadas.')
-                                : h('div', { className: 'space-y-2 mt-2 max-h-40 overflow-y-auto' },
+                                ? h('p', { className: 'text-xs text-slate-400 italic mt-2 text-center' }, 'Guarda el estado actual para reutilizarlo.')
+                                : h('div', { className: 'space-y-2 mt-3 max-h-48 overflow-y-auto pr-1' },
                                     savedTemplates.map((tpl, idx) => 
                                         h('div', { key: idx, className: 'flex items-center gap-2' },
                                             h('button', {
                                                 onClick: () => loadTemplate(tpl),
-                                                className: 'flex-grow text-left p-2 rounded border border-slate-200 hover:bg-slate-50 text-sm'
+                                                className: 'flex-grow text-left p-2.5 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 hover:shadow-sm bg-white transition-all'
                                             }, 
-                                                h('span', { className: 'block font-medium text-slate-700' }, tpl.name),
-                                                h('span', { className: 'block text-xs text-slate-400' }, new Date(tpl.date).toLocaleDateString())
+                                                h('span', { className: 'block font-semibold text-slate-700 text-sm' }, tpl.name),
+                                                h('span', { className: 'block text-[10px] text-slate-400 mt-0.5' }, new Date(tpl.date).toLocaleDateString() + ' ' + new Date(tpl.date).toLocaleTimeString())
                                             ),
                                             h('button', {
                                                 onClick: () => deleteTemplate(idx),
-                                                className: 'text-slate-300 hover:text-red-500 p-1'
+                                                className: 'text-slate-300 hover:text-red-500 p-1.5 hover:bg-red-50 rounded transition-colors'
                                             }, h(TrashIcon, { className: "w-4 h-4" }))
                                         )
                                     )
@@ -412,24 +449,24 @@ const ControlPanel = ({
                 )
             )
         ),
-        pdfDoc && h('div', { className: 'flex-shrink-0 space-y-4 border-t pt-4 mt-4' },
+        pdfDoc && h('div', { className: 'flex-shrink-0 space-y-4 border-t border-slate-100 pt-6 mt-2' },
             h('div', { className: 'flex items-center justify-between' }, 
                 h('button', {
-                    className: 'px-4 py-2 bg-white border rounded-md shadow-sm disabled:opacity-50',
+                    className: 'px-3 py-1.5 text-xs font-medium bg-white border border-slate-200 text-slate-600 rounded-md shadow-sm hover:bg-slate-50 disabled:opacity-50 disabled:hover:bg-white',
                     disabled: currentPage <= 1,
                     onClick: () => setCurrentPage(p => p - 1)
                 }, 'Anterior'),
-                h('span', { className: 'font-semibold text-sm' }, `Página ${currentPage} de ${numPages}`),
+                h('span', { className: 'font-mono text-xs text-slate-500' }, `${currentPage} / ${numPages}`),
                  h('button', {
-                    className: 'px-4 py-2 bg-white border rounded-md shadow-sm disabled:opacity-50',
+                    className: 'px-3 py-1.5 text-xs font-medium bg-white border border-slate-200 text-slate-600 rounded-md shadow-sm hover:bg-slate-50 disabled:opacity-50 disabled:hover:bg-white',
                     disabled: currentPage >= numPages,
                     onClick: () => setCurrentPage(p => p + 1)
                 }, 'Siguiente')
             ),
              h('button', {
-                className: 'w-full bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors',
+                className: 'w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold py-3 px-4 rounded-xl hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 border border-indigo-700/20',
                 onClick: generatePdf
-             }, 'Generar y Descargar PDF')
+             }, 'Exportar Documento PDF')
         )
     );
 }
@@ -449,6 +486,7 @@ function App() {
     const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
     const [zoom, setZoom] = useState(1);
     const [isAutoFitting, setIsAutoFitting] = useState(true);
+    const [notification, setNotification] = useState(null); // { message, type: 'success'|'error' }
     
     // History State (Undo/Redo)
     const [history, setHistory] = useState([]);
@@ -460,17 +498,21 @@ function App() {
     
     // Drawing Mode State
     const [isDrawingMode, setIsDrawingMode] = useState(false);
-    const [brushSize, setBrushSize] = useState(15);
+    const [brushSize, setBrushSize] = useState(5); 
     const [isDrawing, setIsDrawing] = useState(false);
+    
+    // Smart Guides State
+    const [guides, setGuides] = useState([]);
 
     const canvasRef = useRef(null);
     const renderTaskRef = useRef(null);
     const fileInputRef = useRef(null);
-    const imageInputRef = useRef(null); // Ref para input de imagen
+    const imageInputRef = useRef(null); 
+    const templateInputRef = useRef(null);
     const fontsCache = useRef({});
     const previewContainerRef = useRef(null);
-    const elementsRef = useRef(elements); // Ref for event listeners
-    elementsRef.current = elements; // Keep ref synced
+    const elementsRef = useRef(elements); 
+    elementsRef.current = elements; 
 
     const selectedElement = elements.find(el => el.id === selectedElementId);
     
@@ -487,10 +529,15 @@ function App() {
         }
     }, []);
 
+    const showNotification = (message, type = 'success') => {
+        setNotification({ message, type });
+        setTimeout(() => setNotification(null), 3000);
+    };
+
     // --- Signature / Template Functions ---
     const saveSignature = () => {
         if (!selectedElement || selectedElement.type !== 'text') {
-            alert("Selecciona un elemento de texto para guardar como firma.");
+            showNotification("Selecciona un texto para guardar", "error");
             return;
         }
         const newSig = { 
@@ -500,6 +547,7 @@ function App() {
         const updated = [...savedSignatures, newSig];
         setSavedSignatures(updated);
         localStorage.setItem('pdf_filler_signatures', JSON.stringify(updated));
+        showNotification("Firma guardada", "success");
     };
 
     const loadSignature = (sig) => {
@@ -522,11 +570,13 @@ function App() {
 
     const saveTemplate = () => {
         if (elements.length === 0) {
-            alert("No hay elementos para guardar.");
+            showNotification("No hay elementos para guardar.", "error");
             return;
         }
-        const name = prompt("Nombre para esta plantilla (ej: Formulario Hacienda):");
-        if (!name) return;
+        
+        // Auto-generate name with date to avoid prompt blocking
+        const date = new Date();
+        const name = `Plantilla ${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
         
         const newTemplate = {
             name: name,
@@ -537,11 +587,52 @@ function App() {
         const updated = [...savedTemplates, newTemplate];
         setSavedTemplates(updated);
         localStorage.setItem('pdf_filler_templates', JSON.stringify(updated));
+        showNotification("Plantilla guardada correctamente", "success");
+    };
+
+    const exportTemplate = () => {
+        if (elements.length === 0) {
+            showNotification("No hay nada que exportar", "error");
+            return;
+        }
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(elements));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "docuflow_template.json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+        showNotification("Plantilla descargada", "success");
+    };
+
+    const handleImportTemplate = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const importedElements = JSON.parse(event.target.result);
+                if (Array.isArray(importedElements)) {
+                    if (confirm("¿Reemplazar los elementos actuales con la plantilla importada?")) {
+                        setElementsWithHistory(importedElements);
+                        showNotification("Plantilla importada con éxito", "success");
+                    }
+                } else {
+                    throw new Error("Formato inválido");
+                }
+            } catch (err) {
+                showNotification("Error al leer el archivo JSON", "error");
+            }
+        };
+        reader.readAsText(file);
+        e.target.value = ''; // Reset input
     };
 
     const loadTemplate = (template) => {
-        if (confirm(`Cargar plantilla "${template.name}"?\nEsto reemplazará los textos actuales. Asegúrate de tener cargado el PDF correcto.`)) {
+        if (confirm(`¿Cargar plantilla "${template.name}"? Esto reemplazará tu trabajo actual.`)) {
              setElementsWithHistory(template.elements);
+             showNotification("Plantilla cargada", "success");
         }
     };
     
@@ -677,7 +768,6 @@ function App() {
                     });
                     return next;
                 });
-                // Debounced history add could go here, but for simplicity we skip it for single pixel moves or add on keyUp
             }
         };
 
@@ -921,6 +1011,12 @@ function App() {
         const elementStartWidth = element.width;
         let hasMoved = false;
 
+        // --- SNAP LOGIC SETUP ---
+        // Pre-calculate other elements' positions for efficiency
+        const otherElements = elementsRef.current.filter(el => el.page === currentPage && el.id !== element.id);
+        const SNAP_THRESHOLD = 5; // Pixels
+        const pageWidth = canvasSize.width; // This is the viewport width (at 1.5 scale) which is our coordinate space
+
         const handleMouseMove = (moveEvent) => {
              const currentX = moveEvent.clientX / zoom;
              const currentY = moveEvent.clientY / zoom;
@@ -954,13 +1050,83 @@ function App() {
                     }));
                 }
             } else {
-                setElements(prev => prev.map(el => el.id === element.id ? { ...el, x: elementStartX + dx, y: elementStartY + dy } : el));
+                // --- MOVING & SNAPPING ---
+                let newX = elementStartX + dx;
+                let newY = elementStartY + dy;
+                
+                // --- SMART GUIDES CALCULATION ---
+                let snapX = null;
+                let snapY = null;
+                const currentGuides = [];
+
+                const elWidth = element.width;
+                // Approximate height for text if not present
+                const elHeight = element.height || (element.fontSize * (element.lineHeight || 1.2));
+                
+                const elCenterX = newX + elWidth / 2;
+                const elCenterY = newY + elHeight / 2;
+
+                // 1. Center of Page Snap
+                if (Math.abs(elCenterX - pageWidth / 2) < SNAP_THRESHOLD) {
+                    snapX = (pageWidth / 2) - (elWidth / 2);
+                    currentGuides.push({ type: 'vertical', x: pageWidth / 2 });
+                }
+
+                // 2. Element-to-Element Snap
+                otherElements.forEach(other => {
+                    const otherWidth = other.width;
+                    const otherHeight = other.height || (other.fontSize * (other.lineHeight || 1.2));
+                    const otherCenterX = other.x + otherWidth / 2;
+                    const otherCenterY = other.y + otherHeight / 2;
+
+                    // Vertical Alignments (X-axis)
+                    // Left to Left
+                    if (Math.abs(newX - other.x) < SNAP_THRESHOLD) {
+                        snapX = other.x;
+                        currentGuides.push({ type: 'vertical', x: other.x });
+                    }
+                    // Left to Right (My Left to Other Right)
+                    if (Math.abs(newX - (other.x + otherWidth)) < SNAP_THRESHOLD) {
+                        snapX = other.x + otherWidth;
+                        currentGuides.push({ type: 'vertical', x: other.x + otherWidth });
+                    }
+                    // Right to Left (My Right to Other Left)
+                    if (Math.abs((newX + elWidth) - other.x) < SNAP_THRESHOLD) {
+                        snapX = other.x - elWidth;
+                        currentGuides.push({ type: 'vertical', x: other.x });
+                    }
+                    // Center to Center
+                    if (Math.abs(elCenterX - otherCenterX) < SNAP_THRESHOLD) {
+                        snapX = otherCenterX - (elWidth / 2);
+                        currentGuides.push({ type: 'vertical', x: otherCenterX });
+                    }
+
+                    // Horizontal Alignments (Y-axis)
+                    // Top to Top
+                    if (Math.abs(newY - other.y) < SNAP_THRESHOLD) {
+                        snapY = other.y;
+                        currentGuides.push({ type: 'horizontal', y: other.y });
+                    }
+                     // Center to Center
+                    if (Math.abs(elCenterY - otherCenterY) < SNAP_THRESHOLD) {
+                        snapY = otherCenterY - (elHeight / 2);
+                        currentGuides.push({ type: 'horizontal', y: otherCenterY });
+                    }
+                });
+
+                if (snapX !== null) newX = snapX;
+                if (snapY !== null) newY = snapY;
+                
+                setGuides(currentGuides);
+
+                setElements(prev => prev.map(el => el.id === element.id ? { ...el, x: newX, y: newY } : el));
             }
         };
 
         const handleMouseUp = () => {
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseup', handleMouseUp);
+            setGuides([]); // Clear guides on release
             // Only add to history if the element actually changed position/size
             if (hasMoved) {
                 addToHistory(elementsRef.current);
@@ -997,6 +1163,10 @@ function App() {
             const existingPdfBytes = await pdfFile.arrayBuffer();
             const pdfDoc = await PDFDocument.load(existingPdfBytes, { ignoreEncryption: true });
             
+            // --- REGISTRO DE FONTKIT ---
+            // Importante para poder incrustar fuentes personalizadas (TTF/OTF)
+            pdfDoc.registerFontkit(fontkit);
+
             const fontPromises = elements
                 .filter(el => el.type === 'text') // Only load fonts for text elements
                 .map(el => fetchFont(el.fontFamily));
@@ -1198,23 +1368,31 @@ function App() {
     };
     
     const ZoomControls = () => h('div', { className: 'zoom-controls' },
-        h('div', { className: 'flex items-center bg-white/80 backdrop-blur-sm rounded-lg shadow-lg border border-slate-200 p-1 space-x-1' },
-            h('button', { className: 'p-2 rounded-md hover:bg-slate-100', onClick: () => { setZoom(z => z / 1.2); setIsAutoFitting(false); } }, h(MinusIcon)),
-            h('button', { className: 'p-2 rounded-md hover:bg-slate-100', onClick: () => { setZoom(1); setIsAutoFitting(false); } }, h('span', { className: 'text-sm font-semibold w-12 text-center' }, `${Math.round(zoom * 100)}%`)),
-            h('button', { className: 'p-2 rounded-md hover:bg-slate-100', onClick: () => { setZoom(z => z * 1.2); setIsAutoFitting(false); } }, h(PlusIcon)),
-            h('div', { className: 'w-px h-5 bg-slate-200 mx-1' }),
-            h('button', { className: 'p-2 rounded-md hover:bg-slate-100', onClick: () => setIsAutoFitting(true) }, h(FitScreenIcon))
+        h('div', { className: 'flex items-center bg-slate-900/90 text-white backdrop-blur-md rounded-full shadow-xl border border-white/10 p-1.5 space-x-1' },
+            h('button', { className: 'p-2 rounded-full hover:bg-white/20 transition-colors', onClick: () => { setZoom(z => z / 1.2); setIsAutoFitting(false); } }, h(MinusIcon)),
+            h('button', { className: 'p-2 px-3 rounded-full hover:bg-white/10 transition-colors font-mono text-xs', onClick: () => { setZoom(1); setIsAutoFitting(false); } }, `${Math.round(zoom * 100)}%`),
+            h('button', { className: 'p-2 rounded-full hover:bg-white/20 transition-colors', onClick: () => { setZoom(z => z * 1.2); setIsAutoFitting(false); } }, h(PlusIcon)),
+            h('div', { className: 'w-px h-4 bg-white/20 mx-1' }),
+            h('button', { className: 'p-2 rounded-full hover:bg-white/20 transition-colors', title: "Ajustar a Pantalla", onClick: () => setIsAutoFitting(true) }, h(FitScreenIcon))
         )
     );
 
     const formState = selectedElement || DEFAULT_TEXT_ELEMENT;
 
-    return h('div', { className: 'h-screen w-screen flex flex-col' },
-        h('header', { className: 'bg-white shadow-md p-4 flex-shrink-0 z-10 relative' },
-            h('h1', { className: 'text-2xl font-bold text-sky-700' }, 'Rellenador de Plantillas PDF'),
-            h('p', { className: 'text-slate-600' }, 'Sube un PDF, añade texto y descarga tu documento finalizado.')
+    return h('div', { className: 'h-screen w-screen flex flex-col font-sans text-slate-900' },
+        h('header', { className: 'bg-slate-900 text-white shadow-lg p-3 px-6 flex-shrink-0 z-20 flex items-center justify-between' },
+            h('div', { className: "flex items-center gap-3" },
+                h('div', { className: "w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/50" }, 
+                    h(DocIcon, { className: "w-5 h-5 text-white" })
+                ),
+                h('div', {}, 
+                    h('h1', { className: 'text-xl font-bold tracking-tight' }, 'DocuFlow'),
+                    h('p', { className: 'text-[10px] text-slate-400 font-medium tracking-wider uppercase' }, 'Editor PDF Profesional')
+                )
+            ),
+            h('div', { className: 'text-xs text-slate-400 hidden md:block' }, 'v2.1 • Edición Segura Local')
         ),
-        h('main', { className: 'flex-grow grid grid-cols-1 lg:grid-cols-3 overflow-hidden' },
+        h('main', { className: 'flex-grow grid grid-cols-1 lg:grid-cols-3 overflow-hidden bg-slate-100' },
             
             h(ControlPanel, { 
                 pdfDoc, pdfFile, numPages, currentPage, setCurrentPage, generatePdf, fileInputRef, handleFileChange,
@@ -1224,123 +1402,155 @@ function App() {
                 undo, redo, canUndo: historyIndex > 0, canRedo: historyIndex < history.length - 1,
                 savedSignatures, saveSignature, loadSignature, deleteSignature,
                 savedTemplates, saveTemplate, loadTemplate, deleteTemplate,
+                exportTemplate, handleImportTemplate, templateInputRef,
                 handleImageUpload, imageInputRef
             }),
 
-            h('div', { className: 'lg:col-span-2 bg-slate-500 p-4 lg:p-8 preview-container', ref: previewContainerRef, onClick: () => setSelectedElementId(null) },
-                 pdfDoc && h(React.Fragment, null,
-                    h('div', { 
-                        className: `canvas-wrapper transition-shadow duration-300 ${isDrawingMode ? 'cursor-crosshair' : 'cursor-default'}`, 
-                        style: { 
-                            width: canvasSize.width, 
-                            height: canvasSize.height, 
-                            transform: `scale(${zoom})`, 
-                            transformOrigin: 'center top',
-                            boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5)' // Sombra más realista
+            h('div', { className: 'lg:col-span-2 relative h-full overflow-hidden bg-slate-100' }, // Contenedor Fijo (Marco)
+                // Área de desplazamiento
+                h('div', { 
+                    className: 'h-full w-full overflow-auto p-4 lg:p-8 dot-pattern flex items-start justify-center', // Área scrolleable
+                    ref: previewContainerRef, 
+                    onClick: () => setSelectedElementId(null) 
+                },
+                    pdfDoc && h(React.Fragment, null,
+                        h('div', { 
+                            className: `canvas-wrapper transition-all duration-300 ease-out ${isDrawingMode ? 'cursor-crosshair' : 'cursor-default'}`, 
+                            style: { 
+                                width: canvasSize.width, 
+                                height: canvasSize.height, 
+                                transform: `scale(${zoom})`, 
+                                transformOrigin: 'center top',
+                                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05)' 
+                            },
+                            onMouseDown: handleCanvasMouseDown,
+                            onMouseMove: handleCanvasMouseMove,
+                            onMouseUp: handleCanvasMouseUp,
+                            onMouseLeave: handleCanvasMouseUp
                         },
-                        onMouseDown: handleCanvasMouseDown,
-                        onMouseMove: handleCanvasMouseMove,
-                        onMouseUp: handleCanvasMouseUp,
-                        onMouseLeave: handleCanvasMouseUp
-                    },
-                        h('canvas', { ref: canvasRef }),
-                        // Render Drawing Elements (SVG Layer)
-                        h('svg', { 
-                            className: 'absolute top-0 left-0 w-full h-full pointer-events-none',
-                            style: { zIndex: 1 }
-                        }, 
-                            elements
-                                .filter(el => el.page === currentPage && el.type === 'draw')
-                                .map(el => {
-                                    // Convert flat array [x1,y1,x2,y2] to "x1,y1 x2,y2"
-                                    const pointsStr = el.points.reduce((acc, val, i, arr) => {
-                                        if (i % 2 === 0) return acc + `${val},${arr[i+1]} `;
-                                        return acc;
-                                    }, '').trim();
-                                    
-                                    return h('polyline', {
-                                        key: el.id,
-                                        points: pointsStr,
-                                        fill: 'none',
-                                        stroke: 'white',
-                                        strokeWidth: el.strokeWidth,
-                                        strokeLinecap: 'round',
-                                        strokeLinejoin: 'round'
-                                    });
-                                })
-                        ),
-                        // Render Elements
-                        ...elements.filter(el => el.page === currentPage && el.type !== 'draw').map(element => {
-                            if (element.type === 'image') {
+                            h('canvas', { ref: canvasRef }),
+                            // Render Drawing Elements & Guides (SVG Layer)
+                            h('svg', { 
+                                className: 'absolute top-0 left-0 w-full h-full pointer-events-none',
+                                style: { zIndex: 1 }
+                            }, 
+                                // Render Smart Guides (Magenta Lines)
+                                guides.map((guide, i) => h('line', {
+                                    key: `guide-${i}`,
+                                    x1: guide.type === 'vertical' ? guide.x : 0,
+                                    y1: guide.type === 'horizontal' ? guide.y : 0,
+                                    x2: guide.type === 'vertical' ? guide.x : canvasSize.width,
+                                    y2: guide.type === 'horizontal' ? guide.y : canvasSize.height,
+                                    stroke: '#d946ef', // Fuchsia-500
+                                    strokeWidth: 1 / zoom, 
+                                    strokeDasharray: `${4 / zoom} ${2 / zoom}`,
+                                    opacity: 0.8
+                                })),
+                                // Render Strokes
+                                elements
+                                    .filter(el => el.page === currentPage && el.type === 'draw')
+                                    .map(el => {
+                                        const pointsStr = el.points.reduce((acc, val, i, arr) => {
+                                            if (i % 2 === 0) return acc + `${val},${arr[i+1]} `;
+                                            return acc;
+                                        }, '').trim();
+                                        
+                                        return h('polyline', {
+                                            key: el.id,
+                                            points: pointsStr,
+                                            fill: 'none',
+                                            stroke: 'white',
+                                            strokeWidth: el.strokeWidth,
+                                            strokeLinecap: 'round',
+                                            strokeLinejoin: 'round'
+                                        });
+                                    })
+                            ),
+                            // Render Elements
+                            ...elements.filter(el => el.page === currentPage && el.type !== 'draw').map(element => {
+                                if (element.type === 'image') {
+                                    return h('div', {
+                                        key: element.id,
+                                        className: `text-element group ${selectedElementId === element.id ? 'ring-2 ring-indigo-500 ring-offset-2' : 'hover:ring-1 hover:ring-indigo-300'}`,
+                                        style: {
+                                            left: element.x,
+                                            top: element.y,
+                                            width: element.width,
+                                            height: element.height,
+                                            zIndex: 2
+                                        },
+                                        onMouseDown: (e) => handleElementMouseDown(e, element),
+                                        onClick: (e) => { e.stopPropagation(); setSelectedElementId(element.id); }
+                                    },
+                                        h('img', { 
+                                            src: element.src, 
+                                            className: 'w-full h-full object-contain pointer-events-none select-none',
+                                            style: { opacity: element.opacity || 1 }
+                                        }),
+                                        selectedElementId === element.id && !isDrawingMode && h(React.Fragment, null,
+                                            h('div', { className: 'resize-handle resize-handle-left bg-indigo-500 w-2.5 h-full absolute left-[-5px] rounded-l cursor-ew-resize opacity-0 group-hover:opacity-100 transition-opacity', onMouseDown: e => handleElementMouseDown(e, element, 'left') }),
+                                            h('div', { className: 'resize-handle resize-handle-right bg-indigo-500 w-2.5 h-full absolute right-[-5px] rounded-r cursor-ew-resize opacity-0 group-hover:opacity-100 transition-opacity', onMouseDown: e => handleElementMouseDown(e, element, 'right') })
+                                        )
+                                    );
+                                }
+                                
+                                // Text Elements
                                 return h('div', {
                                     key: element.id,
-                                    className: `text-element ${selectedElementId === element.id ? 'selected' : ''}`,
+                                    className: `text-element group ${selectedElementId === element.id ? 'ring-2 ring-indigo-500 ring-offset-2' : 'hover:ring-1 hover:ring-indigo-300'}`,
                                     style: {
                                         left: element.x,
                                         top: element.y,
                                         width: element.width,
-                                        height: element.height,
+                                        fontSize: element.fontSize,
+                                        fontFamily: `"${element.fontFamily}"`,
+                                        fontWeight: element.fontWeight,
+                                        textAlign: element.textAlign,
+                                        lineHeight: element.lineHeight,
+                                        color: element.color,
                                         zIndex: 2
                                     },
                                     onMouseDown: (e) => handleElementMouseDown(e, element),
                                     onClick: (e) => { e.stopPropagation(); setSelectedElementId(element.id); }
-                                },
-                                    h('img', { 
-                                        src: element.src, 
-                                        className: 'w-full h-full object-contain pointer-events-none',
-                                        style: { opacity: element.opacity || 1 }
-                                    }),
+                                }, 
+                                    (element.text || '').replace(/\\n/g, '\n'),
                                     selectedElementId === element.id && !isDrawingMode && h(React.Fragment, null,
-                                        h('div', { className: 'resize-handle resize-handle-left', onMouseDown: e => handleElementMouseDown(e, element, 'left') }),
-                                        h('div', { className: 'resize-handle resize-handle-right', onMouseDown: e => handleElementMouseDown(e, element, 'right') })
+                                        h('div', { className: 'resize-handle resize-handle-left bg-indigo-500 w-2.5 h-full absolute left-[-5px] rounded-l cursor-ew-resize opacity-0 group-hover:opacity-100 transition-opacity', onMouseDown: e => handleElementMouseDown(e, element, 'left') }),
+                                        h('div', { className: 'resize-handle resize-handle-right bg-indigo-500 w-2.5 h-full absolute right-[-5px] rounded-r cursor-ew-resize opacity-0 group-hover:opacity-100 transition-opacity', onMouseDown: e => handleElementMouseDown(e, element, 'right') })
                                     )
                                 );
-                            }
-                            
-                            // Text Elements
-                            return h('div', {
-                                key: element.id,
-                                className: `text-element ${selectedElementId === element.id ? 'selected' : ''}`,
-                                style: {
-                                    left: element.x,
-                                    top: element.y,
-                                    width: element.width,
-                                    fontSize: element.fontSize,
-                                    fontFamily: `"${element.fontFamily}"`,
-                                    fontWeight: element.fontWeight,
-                                    textAlign: element.textAlign,
-                                    lineHeight: element.lineHeight,
-                                    color: element.color,
-                                    zIndex: 2
-                                },
-                                onMouseDown: (e) => handleElementMouseDown(e, element),
-                                onClick: (e) => { e.stopPropagation(); setSelectedElementId(element.id); }
-                            }, 
-                                (element.text || '').replace(/\\n/g, '\n'),
-                                selectedElementId === element.id && !isDrawingMode && h(React.Fragment, null,
-                                    h('div', { className: 'resize-handle resize-handle-left', onMouseDown: e => handleElementMouseDown(e, element, 'left') }),
-                                    h('div', { className: 'resize-handle resize-handle-right', onMouseDown: e => handleElementMouseDown(e, element, 'right') })
-                                )
-                            );
-                        })
-                    ),
-                    h(ZoomControls)
-                )
-            )
+                            })
+                        )
+                    )
+                ),
+                // Controles de Zoom (Fuera del área de scroll)
+                pdfDoc && h(ZoomControls)
+            ),
+            h(Notification, { message: notification?.message, type: notification?.type })
         ),
-         (isLoading || error) && h('div', { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50' },
-            isLoading ? h('div', { className: 'bg-white p-6 rounded-lg shadow-xl text-center' },
-                h('div', { className: 'animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto mb-4'}),
-                h('p', { className: 'text-lg font-semibold' }, loadingMessage || 'Procesando...'),
-                h('p', { className: 'text-sm text-slate-500' }, 'Por favor, espera un momento.')
+         (isLoading || error) && h('div', { className: 'fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-200' },
+            isLoading ? h('div', { className: 'bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm w-full mx-4' },
+                h('div', { className: 'relative w-16 h-16 mx-auto mb-6' },
+                    h('div', { className: 'absolute inset-0 border-4 border-slate-100 rounded-full' }),
+                    h('div', { className: 'absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin' })
+                ),
+                h('p', { className: 'text-lg font-bold text-slate-800' }, loadingMessage || 'Procesando...'),
+                h('p', { className: 'text-sm text-slate-500 mt-2' }, 'Estamos preparando tu documento.')
             ) :
-            error && h('div', { className: 'bg-white p-6 rounded-lg shadow-xl max-w-sm w-full' },
-                h('h3', { className: 'text-xl font-bold text-red-600 mb-2' }, 'Ocurrió un Error'),
-                h('p', { className: 'text-slate-700 mb-4' }, error),
+            error && h('div', { className: 'bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full mx-4 border-l-4 border-red-500' },
+                h('div', { className: "flex items-start gap-3" },
+                     h('div', { className: "text-red-500 bg-red-50 p-2 rounded-full" }, 
+                        h('svg', { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, h('path', { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" }))
+                     ),
+                     h('div', {},
+                        h('h3', { className: 'text-lg font-bold text-slate-800' }, '¡Ups! Algo salió mal'),
+                        h('p', { className: 'text-sm text-slate-600 mt-1 leading-relaxed' }, error),
+                     )
+                ),
                 h('button', { 
                     onClick: () => setError(''),
-                    className: 'w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600'
-                }, 'Cerrar')
+                    className: 'w-full bg-slate-100 text-slate-700 font-semibold py-2.5 px-4 rounded-lg hover:bg-slate-200 mt-5 transition-colors'
+                }, 'Entendido')
             )
         )
     );
